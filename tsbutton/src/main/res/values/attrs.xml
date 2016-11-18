@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TouchSwitchButton">
+        <attr name="tsb_thumb" format="reference" />
+        <attr name="tsb_radius" format="dimension" />
+        <attr name="tsb_startColor" format="color" />
+        <attr name="tsb_toLeftEndColor" format="color" />
+        <attr name="tsb_toRightEndColor" format="color" />
+        <attr name="tsb_direction">
+            <flag name="TwoWay" value="0"/>
+            <flag name="ToLeft" value="1"/>
+            <flag name="ToRight" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>

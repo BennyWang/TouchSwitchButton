@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To Right Sample"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <com.benny.library.tsbutton.TouchSwitchButton
+        android:id="@+id/to_right"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:tsb_radius="10000dp"
+        app:tsb_direction="ToRight"
+        app:tsb_thumb="@drawable/bg_circle_red"
+        app:tsb_startColor="@android:color/holo_purple"
+        app:tsb_toRightEndColor="@android:color/holo_orange_light"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To Right Sample"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <com.benny.library.tsbutton.TouchSwitchButton
+        android:id="@+id/to_left"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:tsb_radius="10000dp"
+        app:tsb_direction="ToLeft"
+        app:tsb_thumb="@drawable/bg_circle_red"
+        app:tsb_startColor="@android:color/holo_purple"
+        app:tsb_toLeftEndColor="@android:color/holo_orange_light"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="To Right Sample"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
+
+    <com.benny.library.tsbutton.TouchSwitchButton
+        android:id="@+id/two_way"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        app:tsb_radius="10000dp"
+        app:tsb_direction="TwoWay"
+        app:tsb_thumb="@drawable/bg_circle_red"
+        app:tsb_startColor="@android:color/holo_purple"
+        app:tsb_toLeftEndColor="@android:color/holo_green_light"
+        app:tsb_toRightEndColor="@android:color/holo_orange_light"
+        />
+
+</LinearLayout>
