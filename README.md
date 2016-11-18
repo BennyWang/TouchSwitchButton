@@ -3,6 +3,8 @@ A widget for touch swipe to select actions.
 
 ![TouchSwitchButton](https://github.com/BennyWang/TouchSwitchButton/blob/master/art/screen_shot.png)
 
+![TouchSwitchButton](https://github.com/BennyWang/TouchSwitchButton/blob/master/art/screen_shot.gif)
+
 ## Usage
 
 ### TouchSwitchButton
