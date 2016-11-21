@@ -10,9 +10,9 @@ def bintrayApikey = properties.getProperty("bintray.apikey")
 
 def projectVersionName  = android.defaultConfig.versionName
 def projectPackaging    = "aar"
-def projectSiteUrl      = "https://github.com/BennyWang/AutoAdapter"
-def projectIssueTrackerUrl = "https://github.com/BennyWang/AutoAdapter/issues"
-def projectGitUrl       = "https://github.com/BennyWang/AutoAdapter.git"
+def projectSiteUrl      = "https://github.com/BennyWang/TouchSwitchButton"
+def projectIssueTrackerUrl = "https://github.com/BennyWang/TouchSwitchButton/issues"
+def projectGitUrl       = "https://github.com/BennyWang/TouchSwitchButton.git"
 
 def developerId         = "BennyWang"
 def developerName       = "benny"

@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="TouchSwitchButton">
         <attr name="tsb_thumb" format="reference" />
+        <attr name="tsb_thumbId" format="reference" />
         <attr name="tsb_radius" format="dimension" />
         <attr name="tsb_startColor" format="color" />
         <attr name="tsb_toLeftEndColor" format="color" />

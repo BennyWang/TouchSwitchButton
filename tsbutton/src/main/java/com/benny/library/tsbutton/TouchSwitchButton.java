@@ -27,11 +27,12 @@ public class TouchSwitchButton extends RelativeLayout {
     public static final int TO_LEFT = 1;
     public static final int TO_RIGHT = 2;
 
-    private ImageView thumbContainer;
+    private View thumbView;
     private OnActionSelectedListener onToLeftSelectedListener;
     private OnActionSelectedListener onToRightSelectedListener;
 
     private Drawable thumb;
+    private int thumbId;
     private int startColor;
     private int toLeftEndColor;
     private int toRightEndColor;
@@ -40,7 +41,7 @@ public class TouchSwitchButton extends RelativeLayout {
 
     public TouchSwitchButton(Context context) {
         super(context);
-        setupThumb();
+        initView();
     }
 
     public TouchSwitchButton(Context context, AttributeSet attrs) {
@@ -68,6 +69,7 @@ public class TouchSwitchButton extends RelativeLayout {
     void resolveAttributes(Context context, AttributeSet attrs) {
         TypedArray t = context.obtainStyledAttributes(attrs, R.styleable.TouchSwitchButton);
         thumb = t.getDrawable(R.styleable.TouchSwitchButton_tsb_thumb);
+        thumbId = t.getResourceId(R.styleable.TouchSwitchButton_tsb_thumbId, 0);
         direction = t.getInt(R.styleable.TouchSwitchButton_tsb_direction, TWO_WAY);
         startColor = t.getColor(R.styleable.TouchSwitchButton_tsb_startColor, Color.TRANSPARENT);
         toLeftEndColor = t.getColor(R.styleable.TouchSwitchButton_tsb_toLeftEndColor, Color.TRANSPARENT);
@@ -98,22 +100,28 @@ public class TouchSwitchButton extends RelativeLayout {
     }
 
     private void setupThumb() {
-        thumbContainer = new ImageView(getContext());
-        thumbContainer.setImageDrawable(thumb);
-        thumbContainer.setOnTouchListener(new OnThumbTouchListener());
+        if(thumb != null) {
+            ImageView imageView = new ImageView(getContext());
+            imageView.setImageDrawable(thumb);
+            addView(imageView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            thumbView = imageView;
+        }
+        else if(thumbId != 0) {
+            thumbView = findViewById(thumbId);
+        }
 
-        addView(thumbContainer, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        if(thumbView != null) thumbView.setOnTouchListener(new OnThumbTouchListener());
     }
 
     void setThumbSize(int thumbWidth, int thumbHeight) {
-        ViewGroup.LayoutParams lp = thumbContainer.getLayoutParams();
+        ViewGroup.LayoutParams lp = thumbView.getLayoutParams();
         lp.width = thumbWidth;
         lp.height = thumbHeight;
-        thumbContainer.setLayoutParams(lp);
+        thumbView.setLayoutParams(lp);
     }
 
     private float getThumbPosition() {
-        return thumbContainer.getX() - getPaddingLeft();
+        return thumbView.getX() - getPaddingLeft();
     }
 
     private float getThumbInitialPosition(float containerWidth, float thumbWidth) {
@@ -130,7 +138,7 @@ public class TouchSwitchButton extends RelativeLayout {
     }
 
     private float getThumbInitialPosition() {
-        return getThumbInitialPosition(getWidth(), thumbContainer.getWidth());
+        return getThumbInitialPosition(getWidth(), thumbView.getWidth());
     }
 
 
@@ -139,7 +147,7 @@ public class TouchSwitchButton extends RelativeLayout {
     }
 
     private float getThumbMaxPosition() {
-        return getWidth() - getPaddingRight() - getPaddingLeft() - thumbContainer.getWidth();
+        return getWidth() - getPaddingRight() - getPaddingLeft() - thumbView.getWidth();
     }
 
     float getOffsetPercentage(float delta) {
@@ -169,30 +177,26 @@ public class TouchSwitchButton extends RelativeLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int receivedWidth = MeasureSpec.getSize(widthMeasureSpec);
         int receivedHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-        int thumbWidth = 0;
-
-        if(receivedHeight == 0 && thumb.getIntrinsicHeight() != 0) {
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(thumb.getIntrinsicHeight() + getPaddingBottom() + getPaddingTop(), MeasureSpec.EXACTLY);
-        }
-        else if(receivedHeight != 0) {
-            if(thumb.getIntrinsicHeight() == 0) {
-                thumbWidth = receivedHeight - getPaddingBottom() - getPaddingTop();
-                setThumbSize(thumbWidth, thumbWidth);
-            }
-            else {
-                float heightWithoutPadding = receivedHeight  - getPaddingBottom() - getPaddingTop();
-                double ratio = heightWithoutPadding / thumb.getIntrinsicHeight();
-                thumbWidth = (int) (thumb.getIntrinsicWidth() * ratio);
-                setThumbSize(thumbWidth, (int) heightWithoutPadding);
+        if(thumb != null) {
+            if (receivedHeight == 0 && thumb.getIntrinsicHeight() != 0) {
+                heightMeasureSpec = MeasureSpec.makeMeasureSpec(thumb.getIntrinsicHeight() + getPaddingBottom() + getPaddingTop(), MeasureSpec.EXACTLY);
+            } else if (receivedHeight != 0) {
+                if (thumb.getIntrinsicHeight() == 0) {
+                    int thumbWidth = receivedHeight - getPaddingBottom() - getPaddingTop();
+                    setThumbSize(thumbWidth, thumbWidth);
+                } else {
+                    float heightWithoutPadding = receivedHeight - getPaddingBottom() - getPaddingTop();
+                    double ratio = heightWithoutPadding / thumb.getIntrinsicHeight();
+                    setThumbSize((int) (thumb.getIntrinsicWidth() * ratio), (int) heightWithoutPadding);
+                }
             }
         }
-
-        thumbContainer.setTranslationX(getThumbInitialPosition(receivedWidth, thumbWidth));
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+
+        thumbView.setTranslationX(getThumbInitialPosition());
     }
 
     public interface OnActionSelectedListener {
@@ -239,7 +243,7 @@ public class TouchSwitchButton extends RelativeLayout {
                     if(targetX < 0) targetX = 0;
                     if(targetX > getThumbMaxPosition()) targetX = getThumbMaxPosition();
 
-                    thumbContainer.setTranslationX(targetX);
+                    thumbView.setTranslationX(targetX);
                     changeBackground(delta);
                     return true;
 
@@ -255,7 +259,7 @@ public class TouchSwitchButton extends RelativeLayout {
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    ObjectAnimator.ofFloat(thumbContainer, "translationX", getThumbPosition(), initialX).setDuration(200).start();
+                    ObjectAnimator.ofFloat(thumbView, "translationX", getThumbPosition(), initialX).setDuration(200).start();
 
                     ValueAnimator animation = ValueAnimator.ofFloat(delta, 0).setDuration(200);
                     animation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

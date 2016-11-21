@@ -61,14 +61,21 @@
     <com.benny.library.tsbutton.TouchSwitchButton
         android:id="@+id/two_way"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:padding="5dp"
+        app:tsb_thumbId="@+id/thumb"
         app:tsb_radius="10000dp"
         app:tsb_direction="TwoWay"
-        app:tsb_thumb="@drawable/bg_circle_red"
         app:tsb_startColor="@android:color/holo_purple"
         app:tsb_toLeftEndColor="@android:color/holo_green_light"
         app:tsb_toRightEndColor="@android:color/holo_orange_light"
-        />
+        >
+        <ImageView
+            android:id="@+id/thumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_launcher"
+            />
+    </com.benny.library.tsbutton.TouchSwitchButton>
 
 </LinearLayout>

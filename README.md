@@ -54,7 +54,8 @@ TouchSwitchButton default background is a round rect with color you specified in
 * app:rsb_toLeftEndColor [color def:@android:color/white] --> default background's color when you touch move to left, if you set background for TouchSwitchButton, this attr will be ignored.
 * app:rsb_toRightEndColor [color def:@android:color/white] --> default background's color when you touch move to right, if you set background for TouchSwitchButton, this attr will be ignored.
 * app:rsb_direction  --> swipe direction for TouchSwitchButton.
-* app:rsb_thumb [drawable def:400] --> thumb drawable for touch, must be set.
+* app:rsb_thumb [drawable def:400] --> thumb drawable for touch, one of rsb_thumb and rsb_thumb must be set.
+* app:rsb_thumbId [reference def:null] --> thumb reference for touch, one of rsb_thumb and rsb_thumb must be set.
 
 ### Using with Gradle
 
